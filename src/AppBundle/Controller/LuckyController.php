@@ -6,7 +6,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class LuckyController
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class LuckyController extends Controller
 {
     /**
      * @Route("/lucky/number/{count}")
@@ -22,9 +24,12 @@ class LuckyController
         
         $numbersList = implode(', ', $numbers);
 
-        return new Response(
-            '<html><body>Lucky numbers: ' . $numbersList . '</body></html>'
+        $html = $this->render(
+            'lucky/number.html.twig',
+            ['luckyNumberList' => $numbersList]
         );
+
+        return new Response($html);
     }
 
     /**
