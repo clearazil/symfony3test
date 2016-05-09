@@ -1,3 +1,13 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+posts_index:
+    path:     /posts
+    defaults: { _controller: AppBundle:Posts:index }
+posts_create:
+    path:     /posts/create
+    defaults: { _controller: AppBundle:Posts:create }
+posts_edit:
+    path:     /posts/edit/{id}
+    defaults: { _controller: AppBundle:Posts:edit }
+
