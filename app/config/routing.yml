@@ -10,4 +10,13 @@ posts_create:
 posts_edit:
     path:     /posts/edit/{id}
     defaults: { _controller: AppBundle:Posts:edit }
+users_index:
+    path:     /users
+    defaults: { _controller: AppBundle:Users:index }
+users_create:
+    path:     /users/create
+    defaults: { _controller: AppBundle:Users:create }
+users_edit:
+    path:     /users/edit/{id}
+    defaults: { _controller: AppBundle:Users:edit }
 
