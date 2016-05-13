@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="users")
  */
-class User implements UserInterface, EquatableInterface
+class User implements UserInterface, EquatableInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -45,6 +45,12 @@ class User implements UserInterface, EquatableInterface
     private $email;
 
     /**
+     * @ORM\Column(type="boolean")
+     * @var [type]
+     */
+    private $is_active;
+
+    /**
      * @ORM\Column(type="datetime")
      * @var [type]
      */
@@ -58,6 +64,11 @@ class User implements UserInterface, EquatableInterface
 
     private $salt;
     private $roles;
+
+    public function __construct()
+    {
+        $this->is_active = true;
+    }
 
     /**
      * @ORM\PrePersist
@@ -233,5 +244,47 @@ class User implements UserInterface, EquatableInterface
         }
 
         return true;
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+        ) = unserialize($serialized);
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
     }
 }
