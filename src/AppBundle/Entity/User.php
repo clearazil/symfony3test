@@ -4,13 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="users")
  */
-class User
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -54,6 +56,9 @@ class User
      */
     private $updated_at;
 
+    private $salt;
+    private $roles;
+
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -66,6 +71,16 @@ class User
         if($this->getCreatedAt() == null) {
             $this->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
         }
+    }
+
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
     }
 
     /**
@@ -196,5 +211,27 @@ class User
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -44,6 +44,9 @@ class UsersController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
+            $encoder = $this->container->get('security.password_encoder');
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -79,6 +82,9 @@ class UsersController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
+            $encoder = $this->container->get('security.password_encoder');
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
