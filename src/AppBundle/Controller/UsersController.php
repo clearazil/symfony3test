@@ -76,7 +76,7 @@ class UsersController extends Controller
                 'second_options' => ['label' => 'Repeat Password'],
             ])
             ->add('email', TextType::class)
-            ->add('create', SubmitType::class, ['label' => 'Create'])
+            ->add('update', SubmitType::class, ['label' => 'Update'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -84,7 +84,7 @@ class UsersController extends Controller
         if($form->isValid()) {
             $encoder = $this->container->get('security.password_encoder');
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
