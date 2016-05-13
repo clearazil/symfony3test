@@ -4,6 +4,8 @@ app:
 login:
   path:       /login
   defaults:   { _controller: AppBundle:Security:login }
+logout:
+  path:       /logout
 posts_index:
     path:     /posts
     defaults: { _controller: AppBundle:Posts:index }

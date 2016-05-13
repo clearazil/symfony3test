@@ -45,6 +45,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="string")
+     * @var [type]
+     */
+    private $roles = 'ROLE_USER';
+
+    /**
      * @ORM\Column(type="boolean")
      * @var [type]
      */
@@ -63,7 +69,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     private $updated_at;
 
     private $salt;
-    private $roles;
 
     public function __construct()
     {
@@ -84,9 +89,25 @@ class User implements UserInterface, EquatableInterface, \Serializable
         }
     }
 
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $roles = implode(';', $roles);
+
+        $this->roles = $roles;
+
+        return $this;
+    }
+
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return explode(';', $this->roles);
     }
 
     public function getSalt()
