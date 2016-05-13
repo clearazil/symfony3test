@@ -86,7 +86,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getRoles()
     {
-        return $this->roles;
+        return ['ROLE_USER'];
     }
 
     public function getSalt()

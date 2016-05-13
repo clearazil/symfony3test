@@ -6,6 +6,10 @@ security:
     providers:
         in_memory:
             memory: ~
+        db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,6 +19,11 @@ security:
 
         main:
             anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: homepage
+            provider: db_provider
             # activate different ways to authenticate
 
             # http_basic: ~

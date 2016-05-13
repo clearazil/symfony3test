@@ -1,6 +1,9 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+login:
+  path:       /login
+  defaults:   { _controller: AppBundle:Security:login }
 posts_index:
     path:     /posts
     defaults: { _controller: AppBundle:Posts:index }
