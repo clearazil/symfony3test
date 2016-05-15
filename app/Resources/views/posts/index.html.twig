@@ -6,11 +6,13 @@
             <td>ID</td><td>Title</td><td>Message</td>
         </tr>
         {% for post in posts %}
-            <tr>
-                <td><a href="{{ path('posts_edit', {'id': post.id}) }}">{{ post.id }}</a></td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.message }}
-            </tr>
+            {% if is_granted('EDIT', post) %}
+                <tr>
+                    <td><a href="{{ path('posts_edit', {'id': post.id}) }}">{{ post.id }}</a></td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.message }}
+                </tr>
+            {% endif %}
         {% endfor %}
     </table>
 {% endblock %}
